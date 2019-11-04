@@ -5,10 +5,10 @@ from datetime import datetime
 first_frame=None
 status_list=[None,None]
 times=[]
-df=pd.DataFrame(columns=["Start","End"])
+df=pd.DataFrame(columns=["Start","End"]) #To record start and end time
 
 
-video=cv2.VideoCapture(0)
+video=cv2.VideoCapture(0)#capture video using webcam
 
 
 while True:
@@ -26,15 +26,15 @@ while True:
 		first_frame=gray
 		continue
 
-	delta_frame=cv2.absdiff(first_frame,gray)
+	delta_frame=cv2.absdiff(first_frame,gray) #calculating the difference between frames to detect motion
 
 	thresh_frame=cv2.threshold(delta_frame,30,255,cv2.THRESH_BINARY)[1]
 
 	thresh_frame=cv2.dilate(thresh_frame,None,iterations=2)
-	(cnts,_)=cv2.findContours(thresh_frame.copy(),cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+	(cnts,_)=cv2.findContours(thresh_frame.copy(),cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE) 
 
 	for contour in cnts:
-		if cv2.contourArea(contour)<10000:
+		if cv2.contourArea(contour)<10000: #If its value is small it can even detect small objects that are in motion contour means continuos area
 			continue
 		status=1
 
